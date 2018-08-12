@@ -1,0 +1,68 @@
+<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+    <div fxFlex="75%">
+        <mat-card>
+            <mat-card-content>
+                <div class="example-container">
+                    <form [formGroup]='emailForm' (ngSubmit)='submitEmail()' class="example-container">
+                        <mat-form-field matListItem>
+                            <mat-label>To:</mat-label>
+                            <mat-chip-list #toEmailList>
+                                <mat-chip *ngFor="let email of emailForm.get('toEmails').controls; let i = index;" [selectable]="selectable" [removable]="removable"
+                                    (remove)="remove(i, 'toEmails')">
+                                    {{email.value}}
+                                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                </mat-chip>
+                                <input matInput class='form-control' [matChipInputFor]="toEmailList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event, 'toEmails')" />
+
+                            </mat-chip-list>
+
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>CC:</mat-label>
+                            <mat-chip-list #ccEmailList>
+                                <mat-chip *ngFor="let email of emailForm.get('ccEmails').controls; let i = index;" [selectable]="selectable" [removable]="removable"
+                                    (remove)="remove(i, 'ccEmails')">
+                                    {{email.value}}
+                                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                </mat-chip>
+                                <input matInput class='form-control' [matChipInputFor]="ccEmailList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event, 'ccEmails')" />
+                            </mat-chip-list>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Bcc:</mat-label>
+                            <mat-chip-list #bccList>
+                                <mat-chip *ngFor="let email of emailForm.get('bccEmails').controls; let i = index;" [selectable]="selectable" [removable]="removable"
+                                    (remove)="remove(i, 'bccEmails')">
+                                    {{email.value}}
+                                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                </mat-chip>
+                                <input matInput class='form-control' [matChipInputFor]="bccList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                                    (matChipInputTokenEnd)="add($event, 'bccEmails')" />
+                            </mat-chip-list>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Subject</mat-label>
+                            <input matInput type='text' formControlName='subject'>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Message</mat-label>
+                            <textarea cdkAutosizeTextarea rows='5' fromControlName='message' matInput></textarea>
+                        </mat-form-field>
+
+                        <mat-error *ngIf="emailForm.controls.toEmails.errors && (emailForm.controls.toEmails.errors.email || 
+                        emailForm.controls.toEmails.errors.required) && emailForm.touched">
+                            Please enter a valid email address
+                        </mat-error>
+                        <button mat-raised-button color="primary">Send</button>
+                    </form>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
